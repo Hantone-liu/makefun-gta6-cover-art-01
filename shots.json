@@ -1,5 +1,1 @@
-[
-  { "name": "1-cover.jpg", "query": "?shot=cover&photo=pier&caption=Sunset%20Heist", "w": 1080, "h": 1080 },
-  { "name": "2-editor.jpg", "query": "?shot=editor&photo=boulevard&caption=Boulevard%20Queen", "w": 1280, "h": 720 },
-  { "name": "3-cover.jpg", "query": "?shot=cover&photo=boulevard&caption=Boulevard%20Queen", "w": 1080, "h": 1080 }
-]
+[{"h":1080,"name":"1-cover.jpg","query":"?shot=cover&layout=mosaic&grade=neon&caption=NEON%20RUN&sub=NIGHT%20DRIVE%20%C2%B7%20SUMMER%2026&size=1920x1080","w":1920},{"h":880,"name":"2-editor.jpg","query":"?shot=editor&layout=hero&grade=sunset&caption=BOULEVARD%20QUEEN&sub=SUNSET%20RUN%20%C2%B7%20SUMMER%2026&size=1080x1080","w":1280},{"h":1350,"name":"3-cover.jpg","query":"?shot=cover&layout=comic&grade=sunset&caption=BOULEVARD%20QUEEN&sub=SUNSET%20RUN%20%C2%B7%20SUMMER%2026&size=1080x1350","w":1080},{"h":1080,"name":"4-cover.jpg","query":"?shot=cover&layout=hero&grade=sunset&caption=PIER%20LIGHTS&sub=FIRST%20LIGHT%20%C2%B7%20SUMMER%2026&size=1080x1080","w":1080}]
