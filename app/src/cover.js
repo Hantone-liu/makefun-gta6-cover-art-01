@@ -120,6 +120,9 @@ function drawCaption(ctx, w, h, state, grade) {
   if (!text && !sub) return;
   const baseSize = Math.min(w, h) * 0.115 * state.captionScale;
   const margin = h * 0.055;
+  // A bottom caption hugs the cover's lower edge: the text sits over the lowest
+  // strip of the panels (shoulders and chests), never over the faces above it.
+  const edgeGap = h * 0.02;
   const maxWidth = w * 0.92;
   const { lines, size } = text
     ? fitCaption(ctx, text, maxWidth, baseSize)
@@ -130,14 +133,29 @@ function drawCaption(ctx, w, h, state, grade) {
   const subH = sub ? subSize * 1.9 : 0;
   const totalH = blockH + subH;
   const top = state.captionPosition === 'top';
-  const blockTop = top ? margin : h - margin - totalH;
+  const blockTop = top ? margin : h - edgeGap - totalH;
 
-  // A soft dark scrim behind the lettering so it reads on any photo.
-  const scrim = ctx.createLinearGradient(0, top ? 0 : h, 0, top ? totalH + margin * 2 : h - totalH - margin * 2);
-  scrim.addColorStop(0, 'rgba(8, 5, 16, 0)');
-  scrim.addColorStop(1, 'rgba(8, 5, 16, 0.55)');
-  ctx.fillStyle = scrim;
-  ctx.fillRect(0, top ? 0 : h - totalH - margin * 2, w, totalH + margin * 2);
+  // A dark scrim behind the lettering so it reads on any photo: darkest where
+  // the text sits, fading to transparent just beyond the block.
+  if (top) {
+    const y0 = 0;
+    const y1 = blockTop + totalH + margin;
+    const scrim = ctx.createLinearGradient(0, y0, 0, y1);
+    scrim.addColorStop(0, 'rgba(8, 5, 16, 0.55)');
+    scrim.addColorStop(1 - margin / (y1 - y0), 'rgba(8, 5, 16, 0.5)');
+    scrim.addColorStop(1, 'rgba(8, 5, 16, 0)');
+    ctx.fillStyle = scrim;
+    ctx.fillRect(0, y0, w, y1 - y0);
+  } else {
+    const y0 = blockTop - margin;
+    const y1 = h;
+    const scrim = ctx.createLinearGradient(0, y0, 0, y1);
+    scrim.addColorStop(0, 'rgba(8, 5, 16, 0)');
+    scrim.addColorStop(margin / (y1 - y0), 'rgba(8, 5, 16, 0.5)');
+    scrim.addColorStop(1, 'rgba(8, 5, 16, 0.55)');
+    ctx.fillStyle = scrim;
+    ctx.fillRect(0, y0, w, y1 - y0);
+  }
 
   // Accent bar: above the block at the foot, below it at the top.
   const barW = w * 0.16;
